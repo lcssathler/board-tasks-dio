@@ -7,6 +7,10 @@ import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
 
+@Entity
+@Table(name = "board_columns")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "column_type")
 public abstract class BoardColumn {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
@@ -18,25 +22,40 @@ public abstract class BoardColumn {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "boardColumn")
     private List<Card> cards;
-
-    @NotNull
-    @Valid
-    private Board board;
 }
 
+@Entity
+@DiscriminatorValue("INITIAL")
 class InitialColumn extends BoardColumn {
+    @OneToOne
+    @JoinColumn(name = "board_id", unique = true)
+    private Board board;
     private final int order = 1;
 }
 
+@Entity
+@DiscriminatorValue("FINAL")
 class FinalColumn extends BoardColumn {
+    @OneToOne
+    @JoinColumn(name = "board_id", unique = true)
+    private Board board;
     private final int order = 2;
 }
 
+@Entity
+@DiscriminatorValue("CANCELLATION")
 class CancellationColumn extends BoardColumn {
+    @OneToOne
+    @JoinColumn(name = "board_id", unique = true)
+    private Board board;
     private final int order = 3;
 }
 
+@Entity
+@DiscriminatorValue("PENDING")
 class PendingColumn extends BoardColumn{
-
+    @ManyToOne
+    @JoinColumn(name = "board_id", nullable = false)
+    private Board board;
 }
 

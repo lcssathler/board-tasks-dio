@@ -28,9 +28,15 @@ public class Card {
     private LocalDateTime dateCreation;
 
     @ManyToOne
-    @JoinColumn(name = "boardColumn_id", nullable = false)
+    @JoinColumn(name = "board_column_id")
     private BoardColumn boardColumn;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "card_id")
     private List<Block> blocksInfo;
+
+    @PrePersist
+    public void prePersist() {
+        this.dateCreation = LocalDateTime.now();
+    }
 }

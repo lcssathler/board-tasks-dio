@@ -25,18 +25,21 @@ public class Board {
 
     @NotNull
     @NotEmpty
+    @OneToOne(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private InitialColumn initialColumn;
 
     @NotNull
     @NotEmpty
+    @OneToOne(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private FinalColumn finalColumn;
 
 
     @NotNull
     @NotEmpty
+    @OneToOne(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private CancellationColumn cancellationColumn;
 
-    @OneToMany (cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PendingColumn> pendingColumnList = new ArrayList<>();
 
 }
