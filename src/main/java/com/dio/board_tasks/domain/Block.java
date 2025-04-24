@@ -27,6 +27,9 @@ public class Block {
     @NotNull
     private LocalDateTime unblockAt;
 
-
     private boolean isBlocked = false;
+
+    @ManyToOne
+    @JoinColumn(name = "card_id")
+    private Card card;
 }
