@@ -8,12 +8,9 @@ import jakarta.persistence.OneToOne;
 @Entity
 @DiscriminatorValue("FINAL")
 public class FinalColumn extends BoardColumn {
-    @OneToOne
-    @JoinColumn(name = "board_id", unique = true)
-    private Board board;
-    private final int ordering = 2;
 
-    public FinalColumn(Board board) {
-        this.board = board;
+    public FinalColumn() {
+        super();
+        super.ordering = 2;
     }
 }

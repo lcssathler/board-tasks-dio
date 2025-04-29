@@ -1,12 +1,17 @@
-package com.dio.board_tasks.menus;
+package com.dio.board_tasks;
 
 import com.dio.board_tasks.services.BoardService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component
 public class MainMenu {
     private final Scanner scanner = new Scanner(System.in);
-    private BoardService boardService = new BoardService();
+
+    @Autowired
+    private BoardService boardService;
 
     public void init() {
         while (true) {

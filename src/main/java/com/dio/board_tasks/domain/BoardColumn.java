@@ -12,15 +12,20 @@ import java.util.List;
 @DiscriminatorColumn(name = "column_type")
 public abstract class BoardColumn {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
     @Length(min = 5, max = 100)
     protected String name;
 
+    protected int ordering;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "boardColumn")
     private List<Card> cards;
+
+    public BoardColumn() {
+    }
 
     public void setName(String name) {
         this.name = name;

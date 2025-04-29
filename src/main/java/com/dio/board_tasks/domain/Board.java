@@ -17,7 +17,7 @@ import java.util.List;
 @Table(name = "boards")
 public class Board {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Setter
@@ -28,24 +28,24 @@ public class Board {
 
     @Setter
     @NotNull
-    @NotEmpty
-    @OneToOne(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "initialColumn_id", unique = true)
     private InitialColumn initialColumn;
 
     @Setter
     @NotNull
-    @NotEmpty
-    @OneToOne(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "finalColumn_id", unique = true)
     private FinalColumn finalColumn;
 
 
     @Setter
     @NotNull
-    @NotEmpty
-    @OneToOne(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "cancellationColumn_id", unique = true)
     private CancellationColumn cancellationColumn;
 
     @Setter
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<PendingColumn> pendingColumnList;
 }

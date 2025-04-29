@@ -3,14 +3,17 @@ package com.dio.board_tasks.services;
 import com.dio.board_tasks.domain.*;
 import com.dio.board_tasks.repositories.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@Service
 public class BoardService {
     @Autowired
     BoardRepository boardRepository;
+
     private Scanner scanner = new Scanner(System.in);
 
     public void createBoard() {
@@ -22,18 +25,18 @@ public class BoardService {
 
         System.out.print("Type the initial board column name:");
         String initialColumnName = scanner.nextLine();
-        InitialColumn initialColumn = (InitialColumn) createColumn(initialColumnName, new InitialColumn(board));
+        InitialColumn initialColumn = (InitialColumn) createColumn(initialColumnName, new InitialColumn());
         board.setInitialColumn(initialColumn);
 
         System.out.print("Type the final board column name:");
-        String finalColumnName = scanner.next();
-        FinalColumn finalColumn = (FinalColumn) createColumn(finalColumnName, new FinalColumn(board));
+        String finalColumnName = scanner.nextLine();
+        FinalColumn finalColumn = (FinalColumn) createColumn(finalColumnName, new FinalColumn());
         board.setFinalColumn(finalColumn);
 
 
         System.out.print("Type the cancelled board column name:");
-        String cancellationColumnName = scanner.next();
-        CancellationColumn cancellationColumn = (CancellationColumn) createColumn(cancellationColumnName, new CancellationColumn(board));
+        String cancellationColumnName = scanner.nextLine();
+        CancellationColumn cancellationColumn = (CancellationColumn) createColumn(cancellationColumnName, new CancellationColumn());
         board.setCancellationColumn(cancellationColumn);
 
         System.out.print("How many additional columns do you want do create? If you don't, type 0: ");
@@ -42,13 +45,14 @@ public class BoardService {
         if (additionalColumns > 0) {
             for (int i = 0; i < additionalColumns; i++) {
                 System.out.print("Type the pending board column name:");
-                String pendingColumnName = scanner.next();
-                PendingColumn pendingColumn = (PendingColumn) createColumn(pendingColumnName, new PendingColumn(board));
-                pendingColumn.setOrdering(pendingColumn.getOrdering() + i);
+                String pendingColumnName = scanner.nextLine();
+                PendingColumn pendingColumn = (PendingColumn) createColumn(pendingColumnName, new PendingColumn());
+                pendingColumn.setOrderNumber(pendingColumn.getOrderNumber() + i);
                 pendingColumnList.add(pendingColumn);
             }
         }
         board.setPendingColumnList(pendingColumnList);
+        boardRepository.save(board);
     }
 
 

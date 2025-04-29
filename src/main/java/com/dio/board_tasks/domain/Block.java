@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Table(name = "blocks")
 public class Block {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
