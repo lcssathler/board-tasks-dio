@@ -27,7 +27,10 @@ public class MainMenu {
             switch (option) {
                 case 1:
                     boardService.createBoard();
+                    break;
                 case 2:
+                    boardService.showBoards();
+                    break;
                 case 3:
                 case 4:
                     System.exit(0);

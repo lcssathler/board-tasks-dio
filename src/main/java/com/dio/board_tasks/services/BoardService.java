@@ -56,8 +56,24 @@ public class BoardService {
     }
 
 
-    public BoardColumn createColumn(String columnName, BoardColumn column) {
+    }
+
+
+    private BoardColumn createColumn(String columnName, BoardColumn column) {
         column.setName(columnName);
         return column;
+    }
+    public List<Board> showBoards() {
+        List<Board> boardList = boardRepository.findAll();
+        if (boardList.isEmpty()) {
+            System.out.println("Couldn't find any board. Please, create a new board first.");
+            return null;
+        }
+
+        for (int i = 0; i < boardList.size(); i++) {
+            System.out.printf("%d - %s \n", i + 1, boardList.get(i).getName());
+        }
+
+        return boardList;
     }
 }

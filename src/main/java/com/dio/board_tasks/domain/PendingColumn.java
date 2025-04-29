@@ -3,6 +3,7 @@ package com.dio.board_tasks.domain;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ public class PendingColumn extends BoardColumn {
 
     @Getter
     @Setter
+    @Transient
     public int orderNumber= 4;
 
     public PendingColumn() {
