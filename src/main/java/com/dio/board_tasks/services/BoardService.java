@@ -14,7 +14,7 @@ public class BoardService {
     @Autowired
     BoardRepository boardRepository;
 
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     public void createBoard() {
         Board board = new Board();
@@ -73,6 +73,20 @@ public class BoardService {
         column.setName(columnName);
         return column;
     }
+
+//    public void getBoard() {
+//        System.out.println("\n Selecting a board...");
+//        List<Board> boardList = boardRepository.findAll();
+//
+//
+//        showBoards();
+//
+//        int option = scanner.nextInt();
+//        Board board = boardList.get(option - 1);
+//
+//        System.out.println("Board selected: " + board.getName());
+//    }
+
     public List<Board> showBoards() {
         List<Board> boardList = boardRepository.findAll();
         if (boardList.isEmpty()) {
