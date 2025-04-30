@@ -32,6 +32,8 @@ public class MainMenu {
                     boardService.showBoards();
                     break;
                 case 3:
+                    boardService.deleteBoard();
+                    break;
                 case 4:
                     System.exit(0);
                 default:

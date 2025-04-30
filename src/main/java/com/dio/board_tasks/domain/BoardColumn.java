@@ -30,6 +30,7 @@ public abstract class BoardColumn {
     public void setName(String name) {
         this.name = name;
     }
+
 }
 
 

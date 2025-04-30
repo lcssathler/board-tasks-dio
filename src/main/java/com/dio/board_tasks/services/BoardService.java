@@ -55,7 +55,17 @@ public class BoardService {
         boardRepository.save(board);
     }
 
+    public void deleteBoard() {
+        System.out.println("Deleting board...");
+        System.out.print("Which board do you want to delete?: \n");
+        List<Board> boardList = showBoards();
+        if (boardList == null) return;
 
+        System.out.print("Your option [only numbers]: ");
+        int option = scanner.nextInt();
+        Board boardToDelete = boardList.get(option - 1);
+        boardRepository.delete(boardToDelete);
+        System.out.printf("'%s' was deleted successfully \n", boardToDelete.getName());
     }
 
 
