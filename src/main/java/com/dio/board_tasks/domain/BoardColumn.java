@@ -2,6 +2,7 @@ package com.dio.board_tasks.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
@@ -21,7 +22,8 @@ public abstract class BoardColumn {
 
     protected int ordering;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "boardColumn")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "boardColumn", fetch = FetchType.EAGER)
+    @Getter
     private List<Card> cards;
 
     public BoardColumn() {
@@ -29,6 +31,12 @@ public abstract class BoardColumn {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void addCard(Card card) {
+        if (card != null) {
+            this.cards.add(card);
+        }
     }
 
 }

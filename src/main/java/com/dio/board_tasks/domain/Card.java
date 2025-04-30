@@ -3,6 +3,8 @@ package com.dio.board_tasks.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
@@ -18,17 +20,22 @@ public class Card {
     @NotNull
     @NotBlank
     @Length(min = 5, max = 100)
+    @Setter
+    @Getter
     private String title;
 
     @NotNull
     @NotBlank
     @Length(min = 5, max = 500)
+    @Getter
+    @Setter
     private String description;
 
     private LocalDateTime dateCreation;
 
     @ManyToOne
     @JoinColumn(name = "board_column_id")
+    @Setter
     private BoardColumn boardColumn;
 
     @OneToMany(cascade = CascadeType.ALL)

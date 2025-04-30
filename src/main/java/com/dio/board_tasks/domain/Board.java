@@ -24,6 +24,7 @@ public class Board {
     @Length(min = 5, max = 100)
     private String name;
 
+    @Getter
     @Setter
     @NotNull
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)

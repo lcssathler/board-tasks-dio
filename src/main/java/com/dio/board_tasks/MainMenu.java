@@ -15,10 +15,10 @@ public class MainMenu {
 
     public void init() {
         while (true) {
-            System.out.println("*-".repeat(5) + "Board Management" + "*-".repeat(5));
+            System.out.println("*-".repeat(5) + " BOARD MANAGEMENT " + "*-".repeat(5));
             System.out.println("""
                     1- Create new board
-                    2- Select a existing board
+                    2- Select an existing board
                     3- Delete board
                     4- Exit""");
             System.out.print("Choose an option: ");
@@ -29,7 +29,7 @@ public class MainMenu {
                     boardService.createBoard();
                     break;
                 case 2:
-                    boardService.showBoards();
+                    boardService.selectBoard();
                     break;
                 case 3:
                     boardService.deleteBoard();

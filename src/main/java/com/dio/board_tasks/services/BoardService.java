@@ -1,6 +1,7 @@
 package com.dio.board_tasks.services;
 
 import com.dio.board_tasks.domain.*;
+import com.dio.board_tasks.menus.BoardMenu;
 import com.dio.board_tasks.repositories.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ import java.util.Scanner;
 public class BoardService {
     @Autowired
     BoardRepository boardRepository;
+
+    @Autowired
+    BoardMenu boardMenu;
 
     private final Scanner scanner = new Scanner(System.in);
 
@@ -39,7 +43,7 @@ public class BoardService {
         CancellationColumn cancellationColumn = (CancellationColumn) createColumn(cancellationColumnName, new CancellationColumn());
         board.setCancellationColumn(cancellationColumn);
 
-        System.out.print("How many additional columns do you want do create? If you don't, type 0: ");
+        System.out.print("How many additional columns do you want to create? If you don't, type 0: ");
         int additionalColumns = scanner.nextInt();
         List<PendingColumn> pendingColumnList = new ArrayList<>();
         if (additionalColumns > 0) {
@@ -68,11 +72,23 @@ public class BoardService {
         System.out.printf("'%s' was deleted successfully \n", boardToDelete.getName());
     }
 
+    public void selectBoard() {
+        System.out.println("Selecting card...");
+        System.out.print("Which board do you want to select?: \n");
+        List<Board> boardList = showBoards();
+        System.out.print("Your option [only numbers]: ");
+        int option = scanner.nextInt();
+        Board boardSelected = boardList.get(option - 1);
+
+        boardMenu.menu(boardSelected);
+    }
+
 
     private BoardColumn createColumn(String columnName, BoardColumn column) {
         column.setName(columnName);
         return column;
     }
+
     public List<Board> showBoards() {
         List<Board> boardList = boardRepository.findAll();
         if (boardList.isEmpty()) {
