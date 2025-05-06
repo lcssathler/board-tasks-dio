@@ -15,6 +15,7 @@ public class MainMenu {
 
     public void init() {
         while (true) {
+            System.out.println();
             System.out.println("*-".repeat(5) + " BOARD MANAGEMENT " + "*-".repeat(5));
             System.out.println("""
                     1- Create new board

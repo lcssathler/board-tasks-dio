@@ -15,6 +15,7 @@ import java.util.List;
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
 
     @NotNull
@@ -35,6 +36,7 @@ public class Card {
 
     @ManyToOne
     @JoinColumn(name = "board_column_id")
+    @Getter
     @Setter
     private BoardColumn boardColumn;
 

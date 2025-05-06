@@ -1,13 +1,19 @@
 package com.dio.board_tasks.services;
 
 import com.dio.board_tasks.domain.Board;
+import com.dio.board_tasks.domain.BoardColumn;
 import com.dio.board_tasks.domain.Card;
+import com.dio.board_tasks.domain.InitialColumn;
+import com.dio.board_tasks.repositories.CardRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Scanner;
 
 @Service
 public class CardService {
+    @Autowired
+    CardRepository cardRepository;
     public Scanner scanner = new Scanner(System.in);
 
     public void createCard(Board board) {
@@ -23,8 +29,27 @@ public class CardService {
 
         card.setBoardColumn(board.getInitialColumn());
         board.getInitialColumn().addCard(card);
+        cardRepository.save(card);
     }
 
     public void viewCards(Board board) {
+        System.out.println("All cards:");
+        try {
+            for (Card card : board.getInitialColumn().getCards()) {
+                System.out.printf("%d- %s [%s] \n", card.getId(), card.getTitle(), card.getBoardColumn().getName().toUpperCase());
+            }
+
+            for (Card card : board.getFinalColumn().getCards()) {
+                System.out.printf("%d- %s [%s] \n", card.getId(), card.getTitle(), card.getBoardColumn().getName().toUpperCase());
+            }
+
+            for (Card card : board.getCancellationColumn().getCards()) {
+                System.out.printf("%d- %s [%s] \n", card.getId(), card.getTitle(), card.getBoardColumn().getName().toUpperCase());
+            }
+        } catch (Exception e) {
+
+        }
+
     }
+
 }

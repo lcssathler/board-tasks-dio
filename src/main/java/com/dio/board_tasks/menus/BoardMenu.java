@@ -15,7 +15,7 @@ public class BoardMenu {
     private CardService cardService;
 
     public void menu(Board board) {
-        System.out.printf("\n → Board '%s' selected \n", board.getName());
+        System.out.printf("\n→ Board '%s' selected \n\n", board.getName());
         System.out.println("""
                 1- Create card for this board
                 2- Exclude card
@@ -30,7 +30,7 @@ public class BoardMenu {
                 cardService.createCard(board);
                 break;
             case 4:
-
+                cardService.viewCards(board);
         }
     }
 }

@@ -31,6 +31,7 @@ public class Board {
     @JoinColumn(name = "initialColumn_id", unique = true)
     private InitialColumn initialColumn;
 
+    @Getter
     @Setter
     @NotNull
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
@@ -38,12 +39,14 @@ public class Board {
     private FinalColumn finalColumn;
 
 
+    @Getter
     @Setter
     @NotNull
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "cancellationColumn_id", unique = true)
     private CancellationColumn cancellationColumn;
 
+    @Getter
     @Setter
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<PendingColumn> pendingColumnList;

@@ -18,6 +18,7 @@ public abstract class BoardColumn {
 
     @NotNull
     @Length(min = 5, max = 100)
+    @Getter
     protected String name;
 
     protected int ordering;

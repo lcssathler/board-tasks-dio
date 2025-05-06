@@ -73,7 +73,7 @@ public class BoardService {
     }
 
     public void selectBoard() {
-        System.out.println("Selecting card...");
+        System.out.println("\n Selecting card...");
         System.out.print("Which board do you want to select?: \n");
         List<Board> boardList = showBoards();
         System.out.print("Your option [only numbers]: ");
