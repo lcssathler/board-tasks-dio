@@ -8,6 +8,8 @@ import com.dio.board_tasks.repositories.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 @Service
@@ -34,22 +36,20 @@ public class CardService {
 
     public void viewCards(Board board) {
         System.out.println("All cards:");
-        try {
-            for (Card card : board.getInitialColumn().getCards()) {
-                System.out.printf("%d- %s [%s] \n", card.getId(), card.getTitle(), card.getBoardColumn().getName().toUpperCase());
-            }
+        List<BoardColumn> allBoardColumns = List.of(board.getInitialColumn(), board.getFinalColumn(), board.getCancellationColumn());
+        allBoardColumns.forEach(CardService::cardPrinter);
+    }
 
-            for (Card card : board.getFinalColumn().getCards()) {
-                System.out.printf("%d- %s [%s] \n", card.getId(), card.getTitle(), card.getBoardColumn().getName().toUpperCase());
-            }
+    private static void cardPrinter(BoardColumn boardColumn) {
+        List<Card> cards = boardColumn.getCards();
+        Collections.sort(cards, (Card card1, Card card2) -> sortById(card1, card2));
+        cards.forEach(card -> {
+            System.out.printf("%d- %s [%s] \n", card.getId(), card.getTitle(), card.getBoardColumn().getName().toUpperCase());
+        });
+    }
 
-            for (Card card : board.getCancellationColumn().getCards()) {
-                System.out.printf("%d- %s [%s] \n", card.getId(), card.getTitle(), card.getBoardColumn().getName().toUpperCase());
-            }
-        } catch (Exception e) {
-
-        }
-
+    private static int sortById(Card card1, Card card2) {
+        return card1.getId().compareTo(card2.getId());
     }
 
 }
