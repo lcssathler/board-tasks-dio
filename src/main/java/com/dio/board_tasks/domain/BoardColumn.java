@@ -3,6 +3,7 @@ package com.dio.board_tasks.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
@@ -26,6 +27,11 @@ public abstract class BoardColumn {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "boardColumn", fetch = FetchType.EAGER)
     @Getter
     private List<Card> cards;
+
+    @ManyToOne
+    @JoinColumn(name = "board_id")
+    @Setter
+    private Board board;
 
     public BoardColumn() {
     }

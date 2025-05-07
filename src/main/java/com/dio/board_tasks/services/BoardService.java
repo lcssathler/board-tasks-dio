@@ -29,18 +29,18 @@ public class BoardService {
 
         System.out.print("Type the initial board column name:");
         String initialColumnName = scanner.nextLine();
-        InitialColumn initialColumn = (InitialColumn) createColumn(initialColumnName, new InitialColumn());
+        InitialColumn initialColumn = (InitialColumn) createColumn(initialColumnName, board,new InitialColumn());
         board.setInitialColumn(initialColumn);
 
         System.out.print("Type the final board column name:");
         String finalColumnName = scanner.nextLine();
-        FinalColumn finalColumn = (FinalColumn) createColumn(finalColumnName, new FinalColumn());
+        FinalColumn finalColumn = (FinalColumn) createColumn(finalColumnName, board,new FinalColumn());
         board.setFinalColumn(finalColumn);
 
 
         System.out.print("Type the cancelled board column name:");
         String cancellationColumnName = scanner.nextLine();
-        CancellationColumn cancellationColumn = (CancellationColumn) createColumn(cancellationColumnName, new CancellationColumn());
+        CancellationColumn cancellationColumn = (CancellationColumn) createColumn(cancellationColumnName, board,new CancellationColumn());
         board.setCancellationColumn(cancellationColumn);
 
         System.out.print("How many additional columns do you want to create? If you don't, type 0: ");
@@ -50,7 +50,7 @@ public class BoardService {
             for (int i = 0; i < additionalColumns; i++) {
                 System.out.print("Type the pending board column name:");
                 String pendingColumnName = scanner.nextLine();
-                PendingColumn pendingColumn = (PendingColumn) createColumn(pendingColumnName, new PendingColumn());
+                PendingColumn pendingColumn = (PendingColumn) createColumn(pendingColumnName, board,new PendingColumn());
                 pendingColumn.setOrderNumber(pendingColumn.getOrderNumber() + i);
                 pendingColumnList.add(pendingColumn);
             }
@@ -79,13 +79,14 @@ public class BoardService {
         System.out.print("Your option [only numbers]: ");
         int option = scanner.nextInt();
         Board boardSelected = boardList.get(option - 1);
-
-        boardMenu.menu(boardSelected);
+        Board boardFromRepository = boardRepository.findById(boardSelected.getId()).orElseThrow(() -> new RuntimeException("Board not found"));
+        boardMenu.menu(boardFromRepository);
     }
 
 
-    private BoardColumn createColumn(String columnName, BoardColumn column) {
+    private BoardColumn createColumn(String columnName, Board board,BoardColumn column) {
         column.setName(columnName);
+        column.setBoard(board);
         return column;
     }
 
