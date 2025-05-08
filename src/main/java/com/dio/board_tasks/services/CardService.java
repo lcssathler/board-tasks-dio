@@ -1,10 +1,9 @@
 package com.dio.board_tasks.services;
 
 import com.dio.board_tasks.domain.Board;
-import com.dio.board_tasks.domain.BoardColumn;
 import com.dio.board_tasks.domain.Card;
-import com.dio.board_tasks.domain.InitialColumn;
 import com.dio.board_tasks.repositories.CardRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,18 +33,30 @@ public class CardService {
         cardRepository.save(card);
     }
 
-    public void viewCards(Board board) {
-        System.out.println("All cards:");
-        List<BoardColumn> allBoardColumns = List.of(board.getInitialColumn(), board.getFinalColumn(), board.getCancellationColumn());
-        allBoardColumns.forEach(CardService::cardPrinter);
+    @Transactional
+    public List<Card> viewCards(Board board) {
+        List<Card> cards = cardRepository.findByBoard(board);
+        Collections.sort(cards, (Card card1, Card card2) -> sortById(card1, card2));
+        for (int i = 0; i < cards.size(); i++) {
+            Card card = cards.get(i);
+            System.out.printf("\n%d- %s [%s]", i + 1, card.getTitle(), card.getBoardColumn().getName());
+        }
+        return cards;
     }
 
-    private static void cardPrinter(BoardColumn boardColumn) {
-        List<Card> cards = boardColumn.getCards();
-        Collections.sort(cards, (Card card1, Card card2) -> sortById(card1, card2));
-        cards.forEach(card -> {
-            System.out.printf("%d- %s [%s] \n", card.getId(), card.getTitle(), card.getBoardColumn().getName().toUpperCase());
-        });
+    @Transactional
+    public void deleteCard(Board board) {
+        System.out.println("Which card do you want to delete?");
+        List<Card> cards = viewCards(board);
+        System.out.print("\nYour option [only numbers]: ");
+        int option = scanner.nextInt();
+        Card card = cards.get(option - 1);
+        try {
+            card.getBoardColumn().getCards().remove(card);
+            System.out.println("Card removed successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static int sortById(Card card1, Card card2) {

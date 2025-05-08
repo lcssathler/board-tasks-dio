@@ -40,7 +40,7 @@ public class Card {
     @Setter
     private BoardColumn boardColumn;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "card_id")
     private List<Block> blocksInfo;
 
