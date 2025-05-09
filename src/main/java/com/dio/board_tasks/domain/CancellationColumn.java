@@ -11,6 +11,6 @@ public class CancellationColumn extends BoardColumn {
 
     public CancellationColumn() {
         super();
-        super.ordering = 3;
+        super.ordering = 4;
     }
 }

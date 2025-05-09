@@ -22,6 +22,7 @@ public abstract class BoardColumn {
     @Getter
     protected String name;
 
+    @Getter
     protected int ordering;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "boardColumn", fetch = FetchType.EAGER)
@@ -30,6 +31,7 @@ public abstract class BoardColumn {
 
     @ManyToOne
     @JoinColumn(name = "board_id")
+    @Getter
     @Setter
     private Board board;
 

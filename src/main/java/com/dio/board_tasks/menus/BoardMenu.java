@@ -24,9 +24,10 @@ public class BoardMenu {
                     
                     1- Create card for this board
                     2- Exclude card
-                    3- Move card
-                    4- View all cards in this board
-                    5- Exit""");
+                    3- Block card
+                    4- Move card
+                    5- View all cards in this board
+                    6- Exit""");
             System.out.print("Your option: ");
             int option = scanner.nextInt();
 
@@ -38,9 +39,12 @@ public class BoardMenu {
                     cardService.deleteCard(board);
                     break;
                 case 4:
-                    cardService.viewCards(board);
+                    cardService.moveCard(board);
                     break;
                 case 5:
+                    cardService.showAllCards(board);
+                    break;
+                case 6:
                     return;
             }
         }

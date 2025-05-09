@@ -23,7 +23,7 @@ public class BoardService {
     public void createBoard() {
         Board board = new Board();
         System.out.println("Creating a new board...");
-        System.out.print("Type board name: ");
+        System.out.print("Type board name:");
         String boardName = scanner.nextLine();
         board.setName(boardName);
 
@@ -43,15 +43,14 @@ public class BoardService {
         CancellationColumn cancellationColumn = (CancellationColumn) createColumn(cancellationColumnName, board, new CancellationColumn());
         board.setCancellationColumn(cancellationColumn);
 
-        System.out.print("How many additional columns do you want to create? If you don't, type 0: ");
+        System.out.print("How many additional columns do you want to create? If you don't, type 0:");
         int additionalColumns = scanner.nextInt();
         List<PendingColumn> pendingColumnList = new ArrayList<>();
         if (additionalColumns > 0) {
-            for (int i = 0; i < additionalColumns; i++) {
+            for (int i = 1; i <= additionalColumns; i++) {
                 System.out.print("Type the pending board column name:");
-                String pendingColumnName = scanner.nextLine();
+                String pendingColumnName = scanner.next();
                 PendingColumn pendingColumn = (PendingColumn) createColumn(pendingColumnName, board, new PendingColumn());
-                pendingColumn.setOrderNumber(pendingColumn.getOrderNumber() + i);
                 pendingColumnList.add(pendingColumn);
             }
         }

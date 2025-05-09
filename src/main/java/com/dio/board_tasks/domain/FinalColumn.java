@@ -11,6 +11,6 @@ public class FinalColumn extends BoardColumn {
 
     public FinalColumn() {
         super();
-        super.ordering = 2;
+        super.ordering = 3;
     }
 }
