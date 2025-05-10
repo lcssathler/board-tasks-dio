@@ -1,7 +1,7 @@
 package com.dio.board_tasks.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
@@ -13,23 +13,19 @@ public class Block {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Length(min = 3)
+    @Setter
     private String causeBlock;
 
-    @NotNull
+    @Setter
     private LocalDateTime blockAt;
 
-    @NotNull
     @Length(min = 3)
     private String causeUnblock;
 
-    @NotNull
     private LocalDateTime unblockAt;
-
-    private boolean isBlocked = false;
 
     @ManyToOne
     @JoinColumn(name = "card_id")
+    @Setter
     private Card card;
 }

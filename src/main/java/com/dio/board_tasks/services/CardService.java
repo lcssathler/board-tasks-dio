@@ -1,13 +1,16 @@
 package com.dio.board_tasks.services;
 
+import com.dio.board_tasks.domain.Block;
 import com.dio.board_tasks.domain.Board;
 import com.dio.board_tasks.domain.BoardColumn;
 import com.dio.board_tasks.domain.Card;
+import com.dio.board_tasks.repositories.BlockRepository;
 import com.dio.board_tasks.repositories.CardRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,6 +20,10 @@ import java.util.Scanner;
 public class CardService {
     @Autowired
     CardRepository cardRepository;
+
+    @Autowired
+    BlockRepository blockRepository;
+
     public Scanner scanner = new Scanner(System.in);
 
     public void createCard(Board board) {
@@ -31,6 +38,7 @@ public class CardService {
         card.setDescription(cardDescription);
 
         card.setBoardColumn(board.getInitialColumn());
+        card.setDateCreation(LocalDateTime.now());
         board.getInitialColumn().addCard(card);
         cardRepository.save(card);
     }
@@ -44,6 +52,27 @@ public class CardService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Transactional
+    public void blockCard(Board board) {
+        Card card = selectCard(board);
+
+        if (card.isBlocked()) {
+            System.out.println("Card already blocked");
+            return;
+        }
+
+        Block block = new Block();
+        System.out.print("Cause of block:");
+        String cause = scanner.next();
+        block.setCauseBlock(cause);
+        block.setBlockAt(LocalDateTime.now());
+        block.setCard(card);
+        card.setBlocked(true);
+        card.getBlocksInfo().add(block);
+        blockRepository.save(block);
+        System.out.printf("Card '%s' blocked successfully", card.getTitle());
     }
 
     @Transactional
@@ -112,7 +141,7 @@ public class CardService {
         Collections.sort(cards, (Card card1, Card card2) -> sortByOrdering(card1, card2));
         for (int i = 0; i < cards.size(); i++) {
             Card card = cards.get(i);
-            System.out.printf("\n%d- %s [%s]", i + 1, card.getTitle(), card.getBoardColumn().getName());
+            System.out.printf("\n%d- %s [%s] [%s]", i + 1, card.getTitle(), card.getBoardColumn().getName(), card.getBlockSituation().toUpperCase());
         }
 
         return cards;

@@ -8,10 +8,11 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table (name = "cards")
+@Table(name = "cards")
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +33,7 @@ public class Card {
     @Setter
     private String description;
 
+    @Setter
     private LocalDateTime dateCreation;
 
     @ManyToOne
@@ -47,7 +49,8 @@ public class Card {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "card_id")
-    private List<Block> blocksInfo;
+    @Getter
+    private List<Block> blocksInfo = new ArrayList<>();
 
     @PrePersist
     public void prePersist() {
