@@ -40,6 +40,11 @@ public class Card {
     @Setter
     private BoardColumn boardColumn;
 
+    @Getter
+    @Setter
+    @NotNull
+    private boolean isBlocked = false;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "card_id")
     private List<Block> blocksInfo;
@@ -47,5 +52,10 @@ public class Card {
     @PrePersist
     public void prePersist() {
         this.dateCreation = LocalDateTime.now();
+    }
+
+    public String getBlockSituation() {
+        if (this.isBlocked) return "Blocked";
+        return "Unblocked";
     }
 }
