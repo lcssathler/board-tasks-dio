@@ -76,6 +76,24 @@ public class CardService {
     }
 
     @Transactional
+    public void unblockCard(Board board) {
+        Card card = selectCard(board);
+
+        if (!card.isBlocked()) {
+            System.out.println("Card already unblocked");
+            return;
+        }
+
+        Block block = card.getBlocksInfo().getLast();
+        System.out.print("Cause of unblock:");
+        String cause = scanner.next();
+        block.setCauseUnblock(cause);
+        block.setUnblockAt(LocalDateTime.now());
+        card.setBlocked(false);
+        System.out.printf("Card '%s' unblocked successfully", card.getTitle());
+    }
+
+    @Transactional
     public void moveCard(Board board) {
         Card card = selectCard(board);
         if (card.getBoardColumn().getOrdering() == 3) {

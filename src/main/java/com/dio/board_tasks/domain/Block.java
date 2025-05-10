@@ -20,8 +20,10 @@ public class Block {
     private LocalDateTime blockAt;
 
     @Length(min = 3)
+    @Setter
     private String causeUnblock;
 
+    @Setter
     private LocalDateTime unblockAt;
 
     @ManyToOne

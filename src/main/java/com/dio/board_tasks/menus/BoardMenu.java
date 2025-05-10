@@ -42,6 +42,9 @@ public class BoardMenu {
                 case 3:
                     cardService.blockCard(board);
                     break;
+                case 4:
+                    cardService.unblockCard(board);
+                    break;
                 case 5:
                     cardService.moveCard(board);
                     break;
